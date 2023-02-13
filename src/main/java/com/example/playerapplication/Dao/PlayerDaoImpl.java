@@ -72,7 +72,7 @@ public  class PlayerDaoImpl implements PlayersDao {
     @Override
     public Optional<Players> fetchPlayerById(Integer id) {
             log.info("Executing fetchPlayerById..");
-            Players players  =null;
+            Players players;
             try {
                 if (id != null) {
                     String query = "Select * from players where id = ?";
@@ -112,7 +112,7 @@ public  class PlayerDaoImpl implements PlayersDao {
         log.info("Executing deleteOperation()..");
         try {
             if (id != null) {
-                String query = "delete from players where id= ?";
+                String query = "delete from players where id = ?";
                 log.debug("Executing delete Query : {} ", query );
                 log.debug("Parameters : { id : {} } ",id);
                 this.jdbcTemplate.update(query, id);

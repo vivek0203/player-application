@@ -1,4 +1,4 @@
-CREATE TABLE project. players(
+CREATE TABLE players(
 id serial PRIMARY KEY,
 player_name varchar (20)NOT NULL,
 age INTEGER NOT NULL,

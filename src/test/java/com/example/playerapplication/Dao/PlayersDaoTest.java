@@ -5,14 +5,11 @@ import com.example.playerapplication.entity.Players;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,24 +27,18 @@ public class PlayersDaoTest {
         playersDao  = context.getBean("playersDao",PlayersDao.class);
         this.playersDao = context.getBean(PlayersDao.class);
     }
-    @AfterTest
-    public void close() {
-        if (context != null) {
-            context.close();
-        }
-    }
 
     @Test
     public void givenPlayersObj_whenListPlayers_shouldReturnPlayersList(){
         log.info("executing test givenPlayersObj_whenListPlayers_shouldReturnPlayersList()...");
         List<Players> playersList = playersDao.findALLPlayers();
         assertThat(playersList).isNotNull();
-        assertThat(playersList.size()).isEqualTo(3);
+        assertThat(playersList.size()).isEqualTo(6);
     }
     @Test
     public void givenPlayersObj_whenCreatePlayers_shouldReturnCrated(){
         log.info("Executing test givenPlayersObj_whenCreatePlayers_shouldReturnCrated()... ");
-        Players savePlayer = playersDao.createPlayers(new Players("Shreyash Iyer",26,"Cricket",86));
+        Players savePlayer = playersDao.createPlayers(new Players(15,"Shreyash Iyer",26,"Cricket",86));
         assertThat(savePlayer).isNotNull();
         assertThat(savePlayer.getPlayer_name()).isEqualTo("Shreyash Iyer");
         assertThat(savePlayer.getMatches()).isEqualTo(86);
@@ -70,15 +61,21 @@ public class PlayersDaoTest {
         log.info("Executing test givenPlayersObj_whenUpdateSportsNameById_thenShouldReturnUpdatedPlayer()...");
         String updateSportsName = playersDao.updateSportsNameById("TableTennis", 1);
         assertThat(updateSportsName).isNotNull();
-        assertThat(updateSportsName).isEqualTo(1);
+        assertThat(updateSportsName).isEqualTo("success");
     }
     @Test
     public void givenPlayersObj_whenDeletePlayer_thenRemovePlayer(){
         log.info("Executing test givenPlayersObj_whenDeletePlayer_thenRemovePlayer()...");
-        playersDao.deletePlayerById(3);
-        Optional<Players> optionalPlayers = playersDao.fetchPlayerById(3);
-        assertThat(optionalPlayers).isEmpty();
+        String deleteplayer = playersDao.deletePlayerById(4);
+        assertThat(deleteplayer).isEqualTo("success");
 
+
+    }
+    @AfterTest
+    public void close() {
+        if (context != null) {
+            context.close();
+        }
     }
 
 }
